@@ -42,7 +42,7 @@ public class ConfirmResource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getXml() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
@@ -53,7 +53,7 @@ public class ConfirmResource {
      * @param content representation for the resource
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void putXml(String content) {
     }
 

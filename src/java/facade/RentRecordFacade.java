@@ -6,6 +6,7 @@
 package facade;
 
 import entities.RentRecord;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -46,7 +47,7 @@ public class RentRecordFacade extends AbstractFacade<RentRecord> {
         return (RentRecord) query.getResultList().get(0);
     }
 
-    public void confirm(String id) {
+    public void confirm(BigDecimal id) {
         RentRecord rent = this.find(id);
         rent.setConfirmedDate(new Date());
         this.edit(rent);

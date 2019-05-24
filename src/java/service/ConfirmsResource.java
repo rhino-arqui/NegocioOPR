@@ -8,6 +8,7 @@ package service;
 import com.google.gson.Gson;
 import entities.RentRecord;
 import facade.RentRecordFacade;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,7 @@ public class ConfirmsResource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getXml() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
@@ -61,8 +62,8 @@ public class ConfirmsResource {
      * @return an HTTP response with content of the created resource
      */
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response postXml(String content) {
         //TODO
         return Response.created(context.getAbsolutePath()).build();
@@ -71,9 +72,11 @@ public class ConfirmsResource {
     /**
      * Sub-resource locator method for {id}
      */
+    @GET
     @Path("{id}")
     public Response getConfirmResource(@PathParam("id") String id) {
-        this.rentRecordFacade.confirm(id);
+        
+        this.rentRecordFacade.confirm(BigDecimal.valueOf(Double.valueOf(id)));
         return Response.accepted().entity("Confirmed.").build();
     }
 
