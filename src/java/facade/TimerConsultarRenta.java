@@ -29,8 +29,9 @@ public class TimerConsultarRenta {
     @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*/1", second = "30", persistent = false)
     
     public void myTimer() {
-        System.out.println("[Timer]Timer consulta eventos: " + new Date());
+        System.out.println("[TIMER_R]Timer consulta eventos: " + new Date());
         this.printRents();
+        System.out.println("[TIMER_R_END]Timer consulta eventos: " + new Date());
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -40,8 +41,8 @@ public class TimerConsultarRenta {
         try {
             Future<List<RentRecord>> answerFuture = this.asynchronousRentRecord.getRentRecords();
             List<RentRecord> answer = answerFuture.get();
-            System.out.println("Rents size = "+answer.size());
-            System.out.println(answer);
+            System.out.println("[TIMER_R]Rents size = "+answer.size());
+            System.out.println("[TIMER_R] "+answer);
             
         } catch (InterruptedException ex) {
             Logger.getLogger(TimerConsultarRenta.class.getName()).log(Level.SEVERE, null, ex);
