@@ -54,10 +54,10 @@ public class RentarsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
         List<RentRecord> rentRecords = this.rentRecordFacade.findAll();
-        System.out.println(rentRecords);
-        System.out.println(rentRecords.size());
+        //System.out.println(rentRecords);
+        //System.out.println(rentRecords.size());
         String response = this.gson.toJson(rentRecords);
-        System.out.println(response);
+        //System.out.println(response);
         return response;
     }
 

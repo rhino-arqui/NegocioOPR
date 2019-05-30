@@ -8,6 +8,7 @@ package facade;
 import entities.RentRecord;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -63,6 +64,21 @@ public class RentRecordFacade extends AbstractFacade<RentRecord> {
             
              throw new Exception("Is rented");
         }
+        
+    }
+    
+    public List<RentRecord> getRecordsNotConfirmed(){
+        String queryStr ="SELECT rr FROM RentRecord rr WHERE rr.confirmedDate is null";
+        
+        Query query = this.getEntityManager().createQuery(queryStr);
+        return query.getResultList();
+    }
+    
+    public int deleteRecordsNotConfirmed(){
+        String queryStr ="DELETE FROM RentRecord rr WHERE rr.confirmedDate is null";
+        
+        Query query = this.getEntityManager().createQuery(queryStr);
+        return query.executeUpdate();
         
     }
     
