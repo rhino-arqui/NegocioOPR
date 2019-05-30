@@ -6,13 +6,15 @@
 package facade;
 
 import entities.Client;
+import entities.Property;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author root
+ * @author Juan Pablo Peñaloza
  */
 @Stateless
 public class ClientFacade extends AbstractFacade<Client> {
@@ -28,5 +30,22 @@ public class ClientFacade extends AbstractFacade<Client> {
     public ClientFacade() {
         super(Client.class);
     }
+    
+    /**
+     * Returns true if the username and password matches the ones 
+     * stored in the database.
+     * @param username
+     * @param password
+     * @return 
+     */
+    public boolean isCredentialValid(String username, String password) {
+        List<Client> result = em.createNamedQuery("Client.findByUsername")
+                .setParameter("username", username)
+                .getResultList();
+        if(result.isEmpty()) return false;
+        Client client = result.get(0);
+        return client.getPassword().equals(password);
+    }
+    
     
 }
