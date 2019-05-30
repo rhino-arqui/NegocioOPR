@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import entities.RentRecord;
 import facade.RentRecordFacade;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -52,8 +53,12 @@ public class RentarsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        List<RentRecord> rentRecords = this.rentRecordFacade.findAll();
+        System.out.println(rentRecords);
+        System.out.println(rentRecords.size());
+        String response = this.gson.toJson(rentRecords);
+        System.out.println(response);
+        return response;
     }
 
     /**
