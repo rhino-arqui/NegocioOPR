@@ -32,7 +32,6 @@ public class ApplicationConfig extends Application {
         resources.add(service.ConfirmsResource.class);
         resources.add(service.PropertiesResource.class);
         resources.add(service.PropertyResource.class);
-        resources.add(service.RentarResource.class);
         resources.add(service.RentarsResource.class);
     }
     

@@ -29,4 +29,8 @@ public class ClientFacade extends AbstractFacade<Client> {
         super(Client.class);
     }
     
+    public Client getById(String id){
+        return super.find(id);
+    }
+    
 }

@@ -94,9 +94,13 @@ public class PropertiesResource {
     /**
      * Sub-resource locator method for {id}
      */
+    @GET
     @Path("{id}")
-    public PropertyResource getPropertyResource(@PathParam("id") String id) {
-        return PropertyResource.getInstance(id);
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSearchByCedula(@PathParam("id") String id) {
+        List<Property> properties = this.propertyFacade.searchByCedula(id);
+        String json = gson.toJson(properties);
+        return json;
     }
 
     private PropertyFacade lookupPropertyFacadeBean() {
