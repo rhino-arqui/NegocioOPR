@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import entities.Client;
 import facade.ClientFacade;
-import facade.PropertyFacade;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -69,9 +68,10 @@ public class ClientsResource {
         } catch (JsonSyntaxException jsonError) {
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonError.getMessage()).build();
         }
-        boolean isCredentialValid = this.clientFacade.isCredentialValid(clientCredentials.getUsername(), clientCredentials.getPassword());
-        if(!isCredentialValid) return Response.status(Response.Status.UNAUTHORIZED).entity("Credentials not valid").build();
-        return Response.status(Response.Status.ACCEPTED).entity("Welcome").build();
+        Client logedClient = this.clientFacade.login(clientCredentials.getUsername(), clientCredentials.getPassword());
+        if(logedClient == null) return Response.status(Response.Status.UNAUTHORIZED).entity("Credentials not valid").build();
+        String serializedClient = this.gson.toJson(logedClient, Client.class);
+        return Response.status(Response.Status.ACCEPTED).entity(serializedClient).build();
     }
 
     /**
