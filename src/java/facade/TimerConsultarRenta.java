@@ -26,7 +26,7 @@ public class TimerConsultarRenta {
     @EJB
     private AsynchronousRentRecord asynchronousRentRecord;
 
-    @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*/1", second = "30", persistent = false)
+    @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*/10", second = "30", persistent = false)
     
     public void myTimer() {
         System.out.println("[TIMER_R]Timer consulta eventos: " + new Date());

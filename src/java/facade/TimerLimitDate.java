@@ -22,11 +22,12 @@ public class TimerLimitDate {
     @EJB
     private RentRecordFacade rentRecordFacade;
 
-    @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*/1", second = "0", persistent = false)
+    @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*/10", second = "0", persistent = false)
     
     public void myTimer() {
         System.out.println("[TIMER]Timer time limit: " + new Date());
         this.removeConfirmed();
+        System.out.println("[TIMER_END]Timer time limit: " + new Date());
     }
 
     // Add business logic below. (Right-click in editor and choose
