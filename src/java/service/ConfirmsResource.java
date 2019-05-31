@@ -76,8 +76,13 @@ public class ConfirmsResource {
     @Path("{id}")
     public Response getConfirmResource(@PathParam("id") String id) {
         
-        this.rentRecordFacade.confirm(BigDecimal.valueOf(Double.valueOf(id)));
-        return Response.accepted().entity("Confirmed.").build();
+        try{
+            this.rentRecordFacade.confirm(BigDecimal.valueOf(Double.valueOf(id)));
+            return Response.accepted().entity("Confirmed.").build();
+        }catch(Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Not exist.").build();
+        }
+        
     }
 
     private RentRecordFacade lookupRentRecordFacadeBean() {

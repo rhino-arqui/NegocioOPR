@@ -5,11 +5,18 @@
  */
 package facade;
 
+import entities.Property;
 import entities.RentRecord;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.Topic;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,6 +27,16 @@ import javax.persistence.Query;
  */
 @Stateless
 public class RentRecordFacade extends AbstractFacade<RentRecord> {
+
+    @EJB
+    private PropertyFacade propertyFacade;
+
+    @Resource(mappedName = "jms/myTopic")
+    private Topic myTopic;
+
+    @Inject
+    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
+    private JMSContext context;
 
     @PersistenceContext(unitName = "NegocioOPRPU")
     private EntityManager em;
@@ -52,6 +69,7 @@ public class RentRecordFacade extends AbstractFacade<RentRecord> {
         RentRecord rent = this.find(id);
         rent.setConfirmedDate(new Date());
         this.edit(rent);
+        this.sendJMSMessageToMyTopic(this.propertyFacade.find(rent.getPropertyId().getId()));
     }
 
     private void verifyRent(RentRecord entity) throws Exception {
@@ -80,6 +98,10 @@ public class RentRecordFacade extends AbstractFacade<RentRecord> {
         Query query = this.getEntityManager().createQuery(queryStr);
         return query.executeUpdate();
         
+    }
+
+    private void sendJMSMessageToMyTopic(Property messageData) {
+        context.createProducer().send(myTopic, messageData);
     }
     
 }
