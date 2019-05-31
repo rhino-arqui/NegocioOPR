@@ -44,13 +44,13 @@ public class ClientFacade extends AbstractFacade<Client> {
      * @param password
      * @return 
      */
-    public boolean isCredentialValid(String username, String password) {
+    public Client login(String username, String password) {
         List<Client> result = em.createNamedQuery("Client.findByUsername")
                 .setParameter("username", username)
                 .getResultList();
-        if(result.isEmpty()) return false;
+        if(result.isEmpty()) return null;
         Client client = result.get(0);
-        return client.getPassword().equals(password);
+        return client;
     }
     
     
