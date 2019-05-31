@@ -44,7 +44,7 @@ public class PropertyFacade extends AbstractFacade<Property> {
     }
 
     public List<Property> searchByCedula(String id) {
-        String queryStr = "SELECT p FROM Client c LEFT OUTER JOIN Property p"+
+        String queryStr = "SELECT p FROM  Property p"+
         "    WHERE p.clientId = :client_id ";
         //"   ORDER BY  rr.rentalDate DESC ";
         Query query = this.getEntityManager().createQuery(queryStr);
